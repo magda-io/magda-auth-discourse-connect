@@ -20,6 +20,15 @@
     pg "^6.4.0"
     urijs "^1.19.4"
 
+"@magda/ci-utils@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@magda/ci-utils/-/ci-utils-1.0.2.tgz#cf5383611a0a46f1dc7bac256e08a00f3d4c4974"
+  integrity sha512-oJ7LMNCAqG+zbwGM8RPhTepStK8HZqtF4bUWFsCqtaLnRFMKLjbM5qzWj7q/qtzLvIGAtpc45F/hoL0bszDNQQ==
+  dependencies:
+    fs-extra "^9.1.0"
+    recursive-readdir "^2.2.2"
+    yaml "^1.10.2"
+
 "@magda/docker-utils@^0.0.60-alpha.7":
   version "0.0.60-alpha.8"
   resolved "https://registry.yarnpkg.com/@magda/docker-utils/-/docker-utils-0.0.60-alpha.8.tgz#8043dab87ad2f08f43750c4b2b56dc89b6777c6e"
@@ -232,6 +241,11 @@ array-flatten@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
+
+at-least-node@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
+  integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -671,6 +685,16 @@ fs-extra@^2.1.2:
     graceful-fs "^4.1.2"
     jsonfile "^2.1.0"
 
+fs-extra@^9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-9.1.0.tgz#5954460c764a8da2094ba3554bf839e6b9a7c86d"
+  integrity sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
+  dependencies:
+    at-least-node "^1.0.0"
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
 fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
@@ -726,6 +750,11 @@ graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+
+graceful-fs@^4.2.0:
+  version "4.2.6"
+  resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
+  integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
 
 growl@1.10.5:
   version "1.10.5"
@@ -892,6 +921,15 @@ jsonfile@^2.1.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-2.4.0.tgz#3736a2b428b87bbda0cc83b53fa3d633a35c2ae8"
   integrity sha1-NzaitCi4e72gzIO1P6PWM6NcKug=
+  optionalDependencies:
+    graceful-fs "^4.1.6"
+
+jsonfile@^6.0.1:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
+  integrity sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==
+  dependencies:
+    universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
 
@@ -1408,6 +1446,13 @@ readdirp@~3.5.0:
   dependencies:
     picomatch "^2.2.1"
 
+recursive-readdir@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/recursive-readdir/-/recursive-readdir-2.2.2.tgz#9946fb3274e1628de6e36b2f6714953b4845094f"
+  integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
+  dependencies:
+    minimatch "3.0.4"
+
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
@@ -1695,6 +1740,11 @@ uid-safe@~2.1.5:
   dependencies:
     random-bytes "~1.0.0"
 
+universalify@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
+  integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
+
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
@@ -1806,6 +1856,11 @@ y18n@^5.0.2:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-5.0.4.tgz#0ab2db89dd5873b5ec4682d8e703e833373ea897"
   integrity sha512-deLOfD+RvFgrpAmSZgfGdWYE+OKyHcVHaRQ7NphG/63scpRvTHHeQMAxGGvaLVGJ+HYVcCXlzcTK0ZehFf+eHQ==
+
+yaml@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
+  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yargs-parser@13.1.2, yargs-parser@^13.1.2:
   version "13.1.2"

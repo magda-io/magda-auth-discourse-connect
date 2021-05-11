@@ -30,13 +30,14 @@ jobs:
       - run: yarn build
       - run: yarn test
 
-      - name: Setup Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.2.0
+      - name: helm-build-dependencies
+        run: helm dep up deploy/${REPO_NAME}
 
       - name: helm-check
         run: yarn helm-lint
+
+      - name: check-helm-chart-verion
+        run: yarn check-helm-chart-version deploy/${REPO_NAME}/Chart.yaml
 
       - name: Login to GitHub Package Repository
         env:
@@ -72,5 +73,5 @@ jobs:
           helm package -d sync_dir ${REPO_NAME}
           helm repo index --merge "index_dir/index.yaml" sync_dir
           mv -f sync_dir/index.yaml index_dir/index.yaml
-          aws s3 sync sync_dir s3://${S3_BUCKET}/ --acl public-read
-          aws s3 cp index_dir/index.yaml s3://${S3_BUCKET}/index.yaml --acl public-read
+          aws s3 sync sync_dir s3://${S3_BUCKET}/
+          aws s3 cp index_dir/index.yaml s3://${S3_BUCKET}/index.yaml

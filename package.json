@@ -20,6 +20,7 @@
     "retag-and-push": "retag-and-push"
   },
   "devDependencies": {
+    "@magda/ci-utils": "^1.0.2",
     "@magda/docker-utils": "^0.0.60-alpha.7",
     "@types/discourse-sso": "^1.0.0",
     "@types/express": "^4.0.37",
