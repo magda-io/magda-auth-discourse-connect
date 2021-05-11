@@ -17,6 +17,10 @@
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
     "helm-lint": "helm lint deploy/magda-auth-discourse-connect -f deploy/test-deploy.yaml",
     "helm-docs": "helm-docs -t ./README.md.gotmpl -o ../../README.md",
+    "update-all-charts": "helm dep up ./deploy/magda-auth-discourse-connect",
+    "add-all-chart-version-changes": "git ls-files -m | grep Chart.yaml | xargs git add && git ls-files -m | grep Chart.lock | xargs git add",
+    "add-all-helm-docs-changes": "yarn helm-docs && git ls-files -m | grep -i readme.md | xargs git add",
+    "version": "yarn update-helm-chart-version && yarn update-all-charts && yarn add-all-chart-version-changes && yarn add-all-helm-docs-changes",
     "retag-and-push": "retag-and-push"
   },
   "devDependencies": {
