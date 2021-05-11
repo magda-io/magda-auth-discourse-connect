@@ -3,7 +3,9 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
 spec:
+{{- if not .Values.autoscaler.enabled }}
   replicas: {{ .Values.replicas | default 1 }}
+{{- end }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
