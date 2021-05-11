@@ -36,6 +36,15 @@ const argv = yargs
         type: "string",
         default: "http://localhost:6100"
     })
+    .option("discourseBaseUrl", {
+        describe: "The base URL of the discourse site.",
+        type: "string"
+    })
+    .option("discourseConnectSecret", {
+        describe: "DiscourseConnectS ecret.",
+        type: "string",
+        default: process.env.DISCOURSE_CONNECT_SECRET
+    })
     .option("dbHost", {
         describe: "The host running the session database.",
         type: "string",
@@ -81,7 +90,7 @@ const argv = yargs
         default: process.env.USER_ID || process.env.npm_package_config_userId
     }).argv;
 
-const authPluginConfig = (argv.authPluginConfigJson as any) as AuthPluginConfig;
+const authPluginConfig = argv.authPluginConfigJson as any as AuthPluginConfig;
 
 // Create a new Express application.
 const app = express();
@@ -145,9 +154,8 @@ app.use(
     createAuthPluginRouter({
         passport: passport,
         authorizationApi: authApiClient,
-        // you might want to update the helm chart to pass clientId & clientSecret provided by your idp (identity provied)
-        clientId: "My clientId",
-        clientSecret: "My clientSecret",
+        discourseBaseUrl: argv.discourseBaseUrl,
+        discourseConnectSecret: argv.discourseConnectSecret,
         externalUrl: argv.externalUrl,
         authPluginRedirectUrl: argv.authPluginRedirectUrl,
         authPluginConfig

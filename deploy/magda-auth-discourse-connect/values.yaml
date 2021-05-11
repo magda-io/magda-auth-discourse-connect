@@ -5,6 +5,13 @@ global:
   externalUrl: ""
   authPluginRedirectUrl: "/sign-in-redirect"
 
+# -- Discourse Site base URL. Compulsory
+# e.g. https://discourse.example.com/
+discourseBaseUrl: 
+
+# -- DiscourseConnectSecrets. Compulsory.
+discourseConnectSecret: 
+
 # -- the redirection url after the whole authentication process is completed.
 # Authentication Plugins will use this value as default.
 # The following query paramaters can be used to supply the authentication result:
