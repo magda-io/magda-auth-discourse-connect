@@ -4,7 +4,9 @@
 
 {{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
 
-{{ template "chart.description" . }}
+This is a Magda authentication plugin that implements "DiscourseConnect" protocol that is described here:
+
+https://meta.discourse.org/t/official-single-sign-on-for-discourse-sso/13045
 
 Requires MAGDA version 0.0.58 or above.
 
@@ -12,17 +14,17 @@ Requires MAGDA version 0.0.58 or above.
 
 1. Add the auth plugin as a [Helm Chart Dependency](https://helm.sh/docs/helm/helm_dependency/)
 ```yaml
-- name: magda-auth-xxxxx
-  version: x.x.x
+- name: magda-auth-discourse-connect
+  version: 1.0.0
   repository: https://charts.magda.io
   tags:
     - all
-    - magda-auth-xxxxx
+    - magda-auth-discourse-connect
 ```
 
 2. Config the auth plugin with required parameters
 ```yaml
-magda-auth-xxxxx:
+magda-auth-discourse-connect:
   param1: value1
   param2: value2
 ```
@@ -31,50 +33,9 @@ magda-auth-xxxxx:
 ```yaml
 gateway:
   authPlugins:
-  - key: xxxxx
-    baseUrl: http://magda-auth-xxxxx
+  - key: discourse-connect
+    baseUrl: http://magda-auth-discourse-connect
 ```
-
-## About this document
-
-This document is auto-generated from helm chart [values file](deploy/magda-auth-template/values.yaml) comments and template [README.md.gotmpl](./README.md.gotmpl) using [helm-docs](https://github.com/norwoodj/helm-docs).
-
-Once you installed `helm-docs`, you can re-generate the docs by running:
-
-```
-yarn helm-docs
-```
-
-## How to use this template repo
-
-To generate a new repo from this template repo, please see [here](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
-
-If you are new to this, please have a read [Authentication Plugin Specification](https://github.com/magda-io/magda/blob/master/docs/docs/authentication-plugin-spec.md).
-
-Once you create a new repo, you can:
-- Replace `magda-auth-template` keywords with your auth plugin name
-- Add your authentication logic to [createAuthPluginRouter.ts](./src/createAuthPluginRouter.ts)
-  - You can find passport.js `strategies` that support different IDPs (identity providers) or authentication servers from [here](http://www.passportjs.org/packages/).
-- Update authentication config in [index.ts](./src/index.ts)
-- Update environment variable defined in [github action workflow files](./.github/workflows) to your config to get [Github Action](https://docs.github.com/en/free-pro-team@latest/actions) CI running.
-
-> Magda provides NPM packages [@magda/authentication-plugin-sdk](https://www.npmjs.com/package/@magda/authentication-plugin-sdk) and [@magda/auth-api-client](https://www.npmjs.com/package/@magda/auth-api-client) that you may need to implement your authentication logic.
-
-To release a docker hub image & helm chart, just [create a release](https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release) in your Github repo. This will trigger the CI job to:
-- Run test cases (if any)
-- Build the docker image
-- Publish docker image to Docker Hub
-- Publish the helm chart to your S3 bucket
-
-## How to Customise Authentication Process
-
-Here is [an example](https://github.com/magda-io/magda-auth-google/commit/f8d6ce53c64b8f1de9a64daf1a6ee2358177d39e) (based on [magda-auth-google](https://github.com/magda-io/magda-auth-google)) to show:
-How you can :
-- Decide & Set user's organisation unit by matching user's profile
-- Decide & set user's role by matching user's profile
-- Customised session data
-- More non-authentication related HTTP endpoints
-
 
 {{ template "chart.maintainersSection" . }}
 

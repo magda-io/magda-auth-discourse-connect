@@ -1,10 +1,10 @@
 {
-  "name": "magda-auth-template",
+  "name": "magda-auth-discourse-connect",
   "version": "1.0.0",
   "description": "A Magda Authentication Plugin Template. You can use this as a base to build your own Authentication Plugin",
-  "repository": "https://github.com/magda-io/magda-auth-template.git",
-  "author": "",
-  "license": "Apache-2.0",
+  "repository": "https://github.com/magda-io/magda-auth-discourse-connect.git",
+  "author": "Jacky Jiang",
+  "license": "UNLICENSED",
   "private": true,
   "scripts": {
     "prebuild": "rimraf dist tsconfig.tsbuildinfo",
@@ -15,7 +15,7 @@
     "test": "mocha --require ts-node/register \"src/test/**/*.spec.ts\"",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
-    "helm-lint": "helm lint deploy/magda-auth-template -f deploy/test-deploy.yaml",
+    "helm-lint": "helm lint deploy/magda-auth-discourse-connect -f deploy/test-deploy.yaml",
     "helm-docs": "helm-docs -t ./README.md.gotmpl -o ../../README.md",
     "retag-and-push": "retag-and-push"
   },
@@ -43,7 +43,7 @@
   },
   "config": {
     "docker": {
-      "name": "data61/magda-auth-template",
+      "name": "data61/magda-auth-discourse-connect",
       "include": "node_modules dist Dockerfile package.json assets"
     },
     "jwtSecret": "squirrel",

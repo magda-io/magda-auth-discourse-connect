@@ -5,7 +5,7 @@ on:
     types: [published]
 
 env:
-  REPO_NAME: magda-auth-template
+  REPO_NAME: magda-auth-discourse-connect
   # Github account username (used for access github registry)
   GH_USERNAME: magdabot
   # Github Orgnisation name or user name for this repo
