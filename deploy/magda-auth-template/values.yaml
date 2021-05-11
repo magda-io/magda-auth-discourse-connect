@@ -1,0 +1,124 @@
+# -- only for providing appropriate default value for helm lint
+global:
+  image: {}
+  rollingUpdate: {}
+  externalUrl: ""
+  authPluginRedirectUrl: "/sign-in-redirect"
+
+# -- the redirection url after the whole authentication process is completed.
+# Authentication Plugins will use this value as default.
+# The following query paramaters can be used to supply the authentication result:
+# <ul>
+# <li>result: (string) Compulsory. Possible value: "success" or "failure". </li>
+# <li>errorMessage: (string) Optional. Text message to provide more information on the error to the user. </li>
+# </ul>
+# This field is for overriding the value set by `global.authPluginRedirectUrl`.
+# Unless you want to have a different value only for this auth plugin, you shouldn't set this value.
+authPluginRedirectUrl:
+
+# -- the redirection url after the whole authentication process is completed.
+# Authentication Plugins will use this value as default.
+# The following query paramaters can be used to supply the authentication result:
+# <ul>
+# <li>result: (string) Compulsory. Possible value: "success" or "failure". </li>
+# <li>errorMessage: (string) Optional. Text message to provide more information on the error to the user. </li>
+# </ul>
+# This field is for overriding the value set by `global.authPluginRedirectUrl`.
+# Unless you want to have a different value only for this auth plugin, you shouldn't set this value.
+authPluginRedirectUrl: 
+
+authPluginConfig:
+  # -- the unique key of the auth plugin. Allowed characters: [a-zA-Z0-9\-]
+  key: "test-auth-plugin"
+  
+  # -- the display name of the auth plugin.
+  name: "Test Auth Plugin"
+  
+  # -- the display icon URL of the auth plugin.
+  iconUrl: "/icon.svg"
+  
+  # -- The authentication method of the plugin. Support values are:
+  # <ul>
+  # <li>`IDP-URI-REDIRECTION`: the plugin will rediredct user agent to idp (identity provider) for authentication. e.g. Google & fackebook oauth etc.</li>
+  # <li>`PASSWORD`: the plugin expect frontend do a form post that contains username & password to the plugin for authentication.</li>
+  # <li>`QR-CODE`: the plugin offers a url that is used by the frontend to request auth challenge data. The data will be encoded into a QR-code image and expect the user scan the QR code with a mobile app to complete the authentication request.</li>
+  # </ul>
+  # See [Authentication Plugin Specification](https://github.com/magda-io/magda/blob/master/docs/docs/authentication-plugin-spec.md) for more details
+  authenticationMethod: "IDP-URI-REDIRECTION"
+  
+  # -- Optional; Only applicable when authenticationMethod = "PASSWORD".
+  # If present, will displayed the heading underneath the login form to provide extra info to users. e.g. how to reset password
+  loginFormExtraInfoHeading: ""
+  
+  # -- Optional; Only applicable when authenticationMethod = "PASSWORD".
+  # If present, will displayed the content underneath the login form to provide extra info to users. e.g. how to reset password
+  # Can support content in markdown format.
+  loginFormExtraInfoContent: ""
+  
+  # -- Optional; Only applicable when authenticationMethod = "PASSWORD".
+  # @default -- "Username"
+  loginFormUsernameFieldLabel: ""
+
+  # -- Optional; Only applicable when authenticationMethod = "PASSWORD".
+  # @default -- "Password"
+  loginFormPasswordFieldLabel: ""
+
+  # -- Only applicable & compulsory when authenticationMethod = "QR-CODE".
+  # The url that is used by frontend client to request auth challenge data from the authentication plugin.
+  # See [Authentication Plugin Specification](https://github.com/magda-io/magda/blob/master/docs/docs/authentication-plugin-spec.md) for more details
+  qrCodeImgDataRequestUrl: ""
+
+  # -- Only applicable & compulsory when authenticationMethod = "QR-CODE".
+  # The url that is used by frontend to poll the authentication processing result.
+  # See [Authentication Plugin Specification](https://github.com/magda-io/magda/blob/master/docs/docs/authentication-plugin-spec.md) for more details
+  qrCodeAuthResultPollUrl: ""
+
+  # -- Only applicable & compulsory when authenticationMethod = "QR-CODE".
+  # If present, will displayed the heading underneath the QR Code image to provide extra instruction to users. e.g. how to download moile app to scan the QR Code
+  qrCodeExtraInfoHeading: ""
+
+  # -- Only applicable & compulsory when authenticationMethod = "QR-CODE".
+  # If present, will displayed the content underneath the login form to provide extra info to users. e.g. how to download moile app to scan the QR Code.
+  # Can support content in markdown format.
+  qrCodeExtraInfoContent: ""
+
+# image setting loadding order: (from higher priority to lower priority)
+# - Values.image.x
+# - Values.global.minions.image.x
+# - Values.global.image.x
+# - Values.defaultImage.x
+# You can set `imagePullSecret` value to `false` (bool) to reset the value (see example below)
+
+autoscaler:
+  # -- turn on the autoscaler or not
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+image: {}
+  # -- default docker image name 
+  # name: 
+  # repository: 
+  # tag: 
+  # pullPolicy: 
+  # imagePullSecret: 
+
+defaultImage:
+  repository: docker.io/data61
+  pullPolicy: IfNotPresent
+  imagePullSecret: false
+
+# -- no. of initial replicas
+replicas: 1
+
+# -- which system account we used to talk to auth api
+# The value of this field will only be used when `global.defaultAdminUserId` has no value
+defaultAdminUserId: "00000000-0000-4000-8000-000000000000"
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 30Mi
+  limits:
+    cpu: 50m

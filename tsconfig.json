@@ -1,0 +1,12 @@
+{
+    "extends": "./tsconfig-global.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "strictNullChecks": false,
+        "rootDir": "./src"
+    },
+    "include": ["./src", "./src/**/*.json"],
+    "ts-node": {
+        "files": true
+    }
+}

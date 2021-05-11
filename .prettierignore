@@ -1,0 +1,4 @@
+deploy
+.gitlab-ci.yml
+.travis.yml
+*.html

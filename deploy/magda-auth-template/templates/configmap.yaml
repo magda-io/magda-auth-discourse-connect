@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-config"
+data:
+  # When the config map is mounted as a volume, these will be created as files.
+  authPluginConfig.json: {{ .Values.authPluginConfig | mustToRawJson | quote }}
+

@@ -1,0 +1,8 @@
+apiVersion: v2
+name: magda-auth-template
+description: A Magda Authentication Plugin Template. You can use this as a base to build your own Magda Authentication Plugin.
+version: "1.0.0"
+kubeVersion: ">= 1.14.0-0"
+home: "https://github.com/magda-io/magda-auth-template"
+sources: ["https://github.com/magda-io/magda-auth-template"]
+
