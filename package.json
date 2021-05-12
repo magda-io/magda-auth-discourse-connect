@@ -15,7 +15,7 @@
     "test": "mocha --require ts-node/register \"src/test/**/*.spec.ts\"",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
-    "helm-lint": "helm lint deploy/magda-auth-discourse-connect -f deploy/test-deploy.yaml",
+    "helm-lint": "helm template deploy/magda-auth-discourse-connect -f deploy/test-deploy.yaml 1>/dev/null",
     "helm-docs": "helm-docs -t ./README.md.gotmpl -o ../../README.md",
     "update-all-charts": "helm dep up ./deploy/magda-auth-discourse-connect",
     "add-all-chart-version-changes": "git ls-files -m | grep Chart.yaml | xargs git add && git ls-files -m | grep Chart.lock | xargs git add",

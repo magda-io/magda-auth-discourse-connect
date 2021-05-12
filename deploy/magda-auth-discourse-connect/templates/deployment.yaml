@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/authPluginConfig: {{ .Values.authPluginConfig | mustToRawJson | sha256sum }}
+        checksum/authPluginConfig: {{ deepCopy .Values.authPluginConfig | mergeOverwrite (pick .Values "discourseBaseUrl" "targetAuthPluginKey") | mustToRawJson | sha256sum }}
       labels:
         service: {{ .Chart.Name }}
     spec:
@@ -38,7 +38,6 @@ See chart value file for details of the logic used to generate this setting valu
             "--listenPort", "80",
             "--dbHost", "session-db",
             "--dbPort", "5432",
-            "--discourseBaseUrl", {{ .Values.discourseBaseUrl | required ".Values.discourseBaseUrl must be provided!" | quote }},
             "--cookieJson", "/etc/gateway-config/cookie.json",
             "--externalUrl", {{ .Values.global.externalUrl | quote }},
             "--authPluginRedirectUrl", {{ .Values.authPluginRedirectUrl | default .Values.global.authPluginRedirectUrl | quote }},

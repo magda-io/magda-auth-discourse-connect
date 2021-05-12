@@ -9,6 +9,14 @@ import discourse_sso from "discourse-sso";
 import fetch from "isomorphic-fetch";
 import urijs from "urijs";
 
+declare module "@magda/authentication-plugin-sdk" {
+    interface AuthPluginConfig {
+        discourseBaseUrl?: string;
+        targetAuthPluginKey?: string;
+        isVisible?: boolean;
+    }
+}
+
 const ADMIN_ROLE = "00000000-0000-0003-0000-000000000000";
 declare module "express-session" {
     interface SessionData {
@@ -22,22 +30,69 @@ declare module "express-session" {
 export interface AuthPluginRouterOptions {
     authorizationApi: ApiClient;
     passport: Authenticator;
-    discourseBaseUrl: string;
     discourseConnectSecret: string;
     externalUrl: string;
     authPluginRedirectUrl: string;
     authPluginConfig: AuthPluginConfig;
 }
 
+async function selectAuthPlugin(
+    currentPluginKey: string,
+    targetAuthPluginKey?: string
+): Promise<string> {
+    const resData = await fetch("http://gateway/auth/plugins");
+    const data: AuthPluginConfig[] = await resData.json();
+
+    if (data?.length < 2) {
+        throw new Error(
+            `Cannot locate at least 2 auth plugins. Found ${data?.length} plugins.`
+        );
+    }
+
+    const availablePlugins = data.filter(
+        (item) =>
+            item?.key !== currentPluginKey &&
+            item.authenticationMethod !== "PASSWORD" &&
+            item.isVisible !== false
+    );
+
+    if (!availablePlugins.length) {
+        throw new Error(
+            `Cannot locate any suitable plugins for user authentication.`
+        );
+    }
+
+    if (
+        typeof targetAuthPluginKey === "string" &&
+        targetAuthPluginKey.length > 1
+    ) {
+        const targetPlugin = availablePlugins.find(
+            (item) => item.key === targetAuthPluginKey
+        );
+        if (!targetPlugin) {
+            throw new Error(
+                `Target auth plugin ${targetAuthPluginKey} is not registered with gateway. Cannot proceed to user authentication.`
+            );
+        }
+        return targetAuthPluginKey;
+    } else {
+        const firstAuthPluginKey = availablePlugins?.[0]?.key;
+        if (!firstAuthPluginKey) {
+            throw new Error(
+                `First suitable auth plugin "${JSON.stringify(
+                    availablePlugins?.[0]
+                )}" has no valid key. Cannot proceed to user authentication.`
+            );
+        }
+        return firstAuthPluginKey;
+    }
+}
+
 export default function createAuthPluginRouter(
     options: AuthPluginRouterOptions
 ): Router {
-    const {
-        discourseBaseUrl,
-        discourseConnectSecret,
-        externalUrl,
-        authPluginConfig
-    } = options;
+    const { discourseConnectSecret, externalUrl, authPluginConfig } = options;
+    const { discourseBaseUrl, targetAuthPluginKey } = authPluginConfig;
     const discourseUtils = new discourse_sso(discourseConnectSecret);
     const authPluginReturnUrl = getAbsoluteUrl(
         `/auth/login/plugin/${authPluginConfig.key}/return`,
@@ -70,35 +125,16 @@ export default function createAuthPluginRouter(
 
                 if (!req?.user?.id) {
                     // magda user not logged in yet
-                    // get a list of plugins from getway
-                    const resData = await fetch("http://gateway/auth/plugins");
-                    const data: AuthPluginConfig[] = await resData.json();
-                    if (data?.length < 2) {
-                        res.status(500).send(
-                            `Cannot locate at least 2 auth plugins. Found ${data?.length} plugins.`
-                        );
-                        return;
-                    }
-                    const availablePlugins = data.filter(
-                        (item) =>
-                            item?.key !== authPluginConfig.key &&
-                            item.authenticationMethod ===
-                                "IDP-URI-REDIRECTION" &&
-                            (item as any)?.isVisible !== false
+                    // get a list of plugins from getway and decide use which one to authenticate the user
+                    const selectedPluginKey = await selectAuthPlugin(
+                        authPluginConfig.key,
+                        targetAuthPluginKey
                     );
 
-                    if (!availablePlugins.length) {
-                        res.status(500).send(
-                            `Cannot locate available plugins.`
-                        );
-                        return;
-                    }
-
-                    const plugin = availablePlugins[0];
                     // not logged in yet; redirect to other auth plugin for authentication
                     res.redirect(
                         getAbsoluteUrl(
-                            urijs(`/auth/login/plugin/${plugin.key}/`)
+                            urijs(`/auth/login/plugin/${selectedPluginKey}/`)
                                 .search({ redirect: authPluginReturnUrl })
                                 .toString(),
                             externalUrl

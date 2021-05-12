@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: "{{ .Chart.Name }}-config"
 data:
+  {{- $_ := required ".Values.discourseBaseUrl must be provided!" .Values.discourseBaseUrl }}
   # When the config map is mounted as a volume, these will be created as files.
-  authPluginConfig.json: {{ .Values.authPluginConfig | mustToRawJson | quote }}
+  authPluginConfig.json: {{ deepCopy .Values.authPluginConfig | mergeOverwrite (pick .Values "discourseBaseUrl" "targetAuthPluginKey") | mustToRawJson | quote }}
 

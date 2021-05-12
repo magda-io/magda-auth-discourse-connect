@@ -12,6 +12,12 @@ discourseBaseUrl:
 # -- DiscourseConnectSecrets. Compulsory.
 discourseConnectSecret: 
 
+# -- Optional; the installed Magda authentication plugin key.
+# When specified, the plugin identified by the key will be used to authenticate users.
+# At this moment, only NON `PASSWORD` type plugins can be used. 
+# If not specified (default), system will auto pick the first NON `PASSWORD` type plugin to authenticate users.
+targetAuthPluginKey: 
+
 # -- the redirection url after the whole authentication process is completed.
 # Authentication Plugins will use this value as default.
 # The following query paramaters can be used to supply the authentication result:

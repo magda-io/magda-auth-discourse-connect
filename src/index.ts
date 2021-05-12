@@ -36,10 +36,6 @@ const argv = yargs
         type: "string",
         default: "http://localhost:6100"
     })
-    .option("discourseBaseUrl", {
-        describe: "The base URL of the discourse site.",
-        type: "string"
-    })
     .option("discourseConnectSecret", {
         describe: "DiscourseConnectS ecret.",
         type: "string",
@@ -154,7 +150,6 @@ app.use(
     createAuthPluginRouter({
         passport: passport,
         authorizationApi: authApiClient,
-        discourseBaseUrl: argv.discourseBaseUrl,
         discourseConnectSecret: argv.discourseConnectSecret,
         externalUrl: argv.externalUrl,
         authPluginRedirectUrl: argv.authPluginRedirectUrl,
