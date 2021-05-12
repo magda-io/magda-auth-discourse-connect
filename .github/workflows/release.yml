@@ -5,6 +5,8 @@ on:
     types: [published]
 
 env:
+  # [avoid issue when Github action upgraded from 18.04 default to 20.04](https://github.com/aws/aws-cli/issues/5262)
+  AWS_EC2_METADATA_DISABLED: true
   REPO_NAME: magda-auth-discourse-connect
   # Github account username (used for access github registry)
   GH_USERNAME: magdabot
