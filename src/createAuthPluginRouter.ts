@@ -98,7 +98,9 @@ export default function createAuthPluginRouter(
                     // not logged in yet; redirect to other auth plugin for authentication
                     res.redirect(
                         getAbsoluteUrl(
-                            `/auth/login/plugin/${plugin.key}/`,
+                            urijs(`/auth/login/plugin/${plugin.key}/`)
+                                .search({ redirect: authPluginReturnUrl })
+                                .toString(),
                             externalUrl
                         )
                     );

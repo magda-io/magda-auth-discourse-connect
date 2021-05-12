@@ -4,7 +4,7 @@
   "description": "A Magda Authentication Plugin Template. You can use this as a base to build your own Authentication Plugin",
   "repository": "https://github.com/magda-io/magda-auth-discourse-connect.git",
   "author": "Jacky Jiang",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "prebuild": "rimraf dist tsconfig.tsbuildinfo",
