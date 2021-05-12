@@ -65,7 +65,7 @@ See chart value file for details of the logic used to generate this setting valu
         - name: USER_ID
           value: {{ .Values.global.defaultAdminUserId | default .Values.defaultAdminUserId }}
         - name: DISCOURSE_CONNECT_SECRET
-          value: {{ .Values.discourseConnectSecret | required ".Values.discourseConnectSecret must be provided!" }} 
+          value: {{ .Values.discourseConnectSecret | required ".Values.discourseConnectSecret must be provided!" | quote }} 
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:

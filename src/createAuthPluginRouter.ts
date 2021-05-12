@@ -1,4 +1,4 @@
-import express, { Router } from "express";
+import express, { Request, Response, Router } from "express";
 import { Authenticator } from "passport";
 import { default as ApiClient } from "@magda/auth-api-client";
 import {
@@ -54,7 +54,7 @@ export default function createAuthPluginRouter(
 
     const router: express.Router = express.Router();
 
-    router.get("/", async (req, res, next) => {
+    async function sso(req: Request, res: Response) {
         try {
             const payload = req?.query?.sso as string;
             const sig = req?.query?.sig as string;
@@ -110,7 +110,10 @@ export default function createAuthPluginRouter(
             console.error(e);
             res.status(500).send("Error: " + e);
         }
-    });
+    }
+
+    router.get("/", sso);
+    router.get("/sso", sso);
 
     router.get("/return", async (req, res, next) => {
         try {
