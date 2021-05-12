@@ -2,7 +2,7 @@ apiVersion: v2
 name: magda-auth-discourse-connect
 description: A Magda Authentication Plugin Template. You can use this as a base
   to build your own Magda Authentication Plugin.
-version: "1.0.1"
+version: "1.0.1-alpha.0"
 kubeVersion: ">= 1.14.0-0"
 home: "https://github.com/magda-io/magda-auth-discourse-connect"
 sources:
