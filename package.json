@@ -1,6 +1,6 @@
 {
   "name": "magda-auth-discourse-connect",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Magda Authentication Plugin Template. You can use this as a base to build your own Authentication Plugin",
   "repository": "https://github.com/magda-io/magda-auth-discourse-connect.git",
   "author": "Jacky Jiang",
