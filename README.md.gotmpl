@@ -25,9 +25,13 @@ Requires MAGDA version 0.0.58 or above.
 2. Config the auth plugin with required parameters
 ```yaml
 magda-auth-discourse-connect:
-  param1: value1
-  param2: value2
+  discourseBaseUrl: value1
+  discourseConnectSecret: value2
+  targetAuthPluginKey: xxx # optional
 ```
+
+More info of the config options can be found from the "Values" section below.
+
 
 3. Config Gatway to add the auth plugin to Gateway's plugin list (More details see [here](https://github.com/magda-io/magda/blob/master/deploy/helm/internal-charts/gateway/README.md))
 ```yaml
@@ -36,6 +40,14 @@ gateway:
   - key: discourse-connect
     baseUrl: http://magda-auth-discourse-connect
 ```
+
+### How to configure Discourse
+
+More info on setup can be found from https://meta.discourse.org/t/official-single-sign-on-for-discourse-sso/13045
+
+Specifically, `discourse connect url` / `sso url` setting value should be: `[Magda deploy base URL]/auth/login/plugin/discourse-connect/sso`
+`discourse connect secret` / `sso secret` setting should be the same as the value of `discourseConnectSecret` deploy value.
+
 
 {{ template "chart.maintainersSection" . }}
 
