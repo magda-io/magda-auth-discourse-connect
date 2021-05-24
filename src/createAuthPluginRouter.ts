@@ -37,10 +37,12 @@ export interface AuthPluginRouterOptions {
 }
 
 async function selectAuthPlugin(
+    externalUrl: string,
     currentPluginKey: string,
     targetAuthPluginKey?: string
 ): Promise<string> {
-    const resData = await fetch("http://gateway/auth/plugins");
+    const pluginsEndpoint = getAbsoluteUrl("/auth/plugins", externalUrl);
+    const resData = await fetch(pluginsEndpoint);
     const data: AuthPluginConfig[] = await resData.json();
 
     if (data?.length < 2) {
@@ -127,6 +129,7 @@ export default function createAuthPluginRouter(
                     // magda user not logged in yet
                     // get a list of plugins from getway and decide use which one to authenticate the user
                     const selectedPluginKey = await selectAuthPlugin(
+                        externalUrl,
                         authPluginConfig.key,
                         targetAuthPluginKey
                     );
