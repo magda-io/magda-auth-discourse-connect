@@ -1,6 +1,6 @@
 # magda-auth-discourse-connect
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square)
 
 This is a Magda authentication plugin that implements "DiscourseConnect" protocol that is described here:
 
